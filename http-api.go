@@ -7,9 +7,12 @@ import (
 	"github.com/gorilla/mux"
 )
 
+var data []string = []string{}
+
 func main() {
 	router := mux.NewRouter()
 	router.HandleFunc("/test", test)
+	router.HandleFunc("/add/{item}", addItem)
 
 	http.ListenAndServe(":5000", router)
 }
@@ -19,4 +22,11 @@ func test(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(struct {
 		ID string
 	}{"1"})
+}
+
+func addItem(w http.ResponseWriter, r *http.Request) {
+	routevariable := mux.Vars(r)["item"]
+	data = append(data, routevariable)
+
+	json.NewEncoder(w).Encode(data)
 }
