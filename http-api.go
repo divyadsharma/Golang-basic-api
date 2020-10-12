@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -14,5 +15,8 @@ func main() {
 }
 
 func test(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("This is a test"))
+	w.Header().Set("Content-type", "application/json")
+	json.NewEncoder(w).Encode(struct {
+		ID string
+	}{"1"})
 }
