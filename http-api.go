@@ -27,6 +27,6 @@ func test(w http.ResponseWriter, r *http.Request) {
 func addItem(w http.ResponseWriter, r *http.Request) {
 	routevariable := mux.Vars(r)["item"]
 	data = append(data, routevariable)
-
+	w.Header().Set("Content-type", "application/json")
 	json.NewEncoder(w).Encode(data)
 }
